@@ -11,12 +11,14 @@
     @private
     NSArray *searchProviders;
     NSDictionary *defaultSearchProvider;
+    NSDictionary *luckySearchProvider;
     NSMenuItem *editSearchProvidersItem;
     NSMutableDictionary *locationFieldContext;
 }
 
 @property (nonatomic, readonly) NSArray *searchProviders;
 @property (nonatomic, readonly) NSDictionary *defaultSearchProvider;
+@property (nonatomic, readonly) NSDictionary *luckySearchProvider;
 @property (nonatomic, readonly) NSString *pluginVersion;
 
 + (SafariOmnibar *)sharedInstance;

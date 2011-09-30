@@ -186,6 +186,7 @@ static BOOL is_search_query(NSString *string)
 @implementation SafariOmnibar
 @synthesize searchProviders;
 @synthesize defaultSearchProvider;
+@synthesize luckySearchProvider;
 @synthesize editSearchProvidersItem;
 @dynamic pluginVersion;
 
@@ -258,6 +259,7 @@ static BOOL is_search_query(NSString *string)
 {
     [searchProviders release]; searchProviders = nil;
     [defaultSearchProvider release]; defaultSearchProvider = nil;
+    [luckySearchProvider release]; luckySearchProvider = nil;
 
     searchProviders = [[[NSUserDefaults standardUserDefaults] arrayForKey:kOmnibarSearchProviders] retain];
 
@@ -266,7 +268,16 @@ static BOOL is_search_query(NSString *string)
         if ([[searchProvider objectForKey:@"Default"] boolValue])
         {
             defaultSearchProvider = [searchProvider retain];
-            break;
+            if (luckySearchProvider != nil) {
+                break;
+            }
+        }
+        if ([[searchProvider objectForKey:@"Lucky"] boolValue])
+        {
+            luckySearchProvider = [searchProvider retain];
+            if (defaultSearchProvider != nil) {
+                break;
+            }
         }
     }
 }
@@ -322,6 +333,12 @@ static BOOL is_search_query(NSString *string)
             // Force default search provider if location starts with "?"
             terms = [location substringFromIndex:1];
             provider = [[SafariOmnibar sharedInstance] defaultSearchProvider];
+        }
+        if ([location hasPrefix:@">"])
+        {
+          // Force lucky search provider if location starts with ">"
+          terms = [location substringFromIndex:1];
+          provider = [[SafariOmnibar sharedInstance] luckySearchProvider];
         }
         else
         {
@@ -451,6 +468,8 @@ static BOOL is_search_query(NSString *string)
     [editSearchProvidersItem release], editSearchProvidersItem = nil;
     [locationFieldContext release], locationFieldContext = nil;
     [defaultSearchProvider release], defaultSearchProvider = nil;
+    [luckySearchProvider release], luckySearchProvider = nil;
+  
     [searchProviders release], searchProviders = nil;
     [super dealloc];
 }
