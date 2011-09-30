@@ -44,6 +44,18 @@
 			<key>SearchURLTemplate</key>
 			<string>http://www.dailymotion.com?search={searchTerms}</string>
 		</dict>
+		<dict>
+			<key>Default</key>
+			<false/>
+			<key>Keyword</key>
+			<string>lucky</string>
+			<key>Lucky</key>
+			<true/>
+			<key>Name</key>
+			<string>I&apos;m Feeling Lucky</string>
+			<key>SearchURLTemplate</key>
+			<string>http://www.google.com/search?client=safari&amp;rls=en&amp;q={searchTerms}&amp;ie=UTF-8&amp;oe=UTF-8&amp;btnI=Im+Feeling+Lucky</string>
+		</dict>
 	</array>
 </dict>
 </plist>
